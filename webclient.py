@@ -12,10 +12,11 @@ from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
 from starlette.responses import Response
 from time import time
+import uvicorn
 from write_to_scv import write_to_scv
 
 
-recording_period = 10 # период записи данных в .csv
+recording_period = 0.1 # период записи данных в .csv
 
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -61,8 +62,7 @@ async def generate_random_data(request: Request) -> Iterator[str]:
 
             current_time = time()
             if current_time - fixed_time > recording_period:
-                print("Write to .csv")
-                #write_to_scv(date, value)
+                #write_to_scv(date, voice_sensor)
                 fixed_time = time()
 
             await asyncio.sleep(0.0005)
@@ -74,3 +74,6 @@ async def chart_data(request: Request) -> StreamingResponse:
     response.headers["Cache-Control"] = "no-cache"
     response.headers["X-Accel-Buffering"] = "no"
     return response
+
+if __name__=="__main__":
+    uvicorn.run("webclient:application", port=8080)
