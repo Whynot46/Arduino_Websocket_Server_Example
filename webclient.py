@@ -76,4 +76,4 @@ async def chart_data(request: Request) -> StreamingResponse:
     return response
 
 if __name__=="__main__":
-    uvicorn.run("webclient:application", port=8080)
+    uvicorn.run("webclient:application", port=80)
