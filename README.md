@@ -4,6 +4,7 @@
 Разрабатывалось для Arduino Uno R3 и Ethernet Shield на базе W5100.
 <br>
 ![Иллюстрация к проекту](https://github.com/Whynot46/Arduino_Websocket_Server/blob/main/example.PNG)
+<br>
 ## Содержание
 - [Технологии](#технологии)
 - [Использование](#использование)
