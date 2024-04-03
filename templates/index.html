@@ -81,8 +81,8 @@
                             labelString: 'Value'
                         },
                         ticks: {
-                            min: 530,
-                            max: 545,
+                            min: 520,
+                            max: 550,
                             stepSize: 1
                             }
                     }]
@@ -151,11 +151,11 @@
 
         source.onmessage = function (event) {
             const data = JSON.parse(event.data);
-            if (config_1.data.labels.length === 210) {
+            if (config_1.data.labels.length === 200) {
                 config_1.data.labels.shift();
                 config_1.data.datasets[0].data.shift();
             }
-	    if (config_2.data.labels.length === 210) {
+	    if (config_2.data.labels.length === 200) {
                 config_2.data.labels.shift();
                 config_2.data.datasets[0].data.shift();
             }

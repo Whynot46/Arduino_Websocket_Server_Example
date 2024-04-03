@@ -1,4 +1,3 @@
-#uvicorn webclient:application --reload --port 80
 import websockets
 import asyncio
 import json
@@ -21,7 +20,6 @@ recording_period = 0.1 # период записи данных в .csv
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
-
 application = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
@@ -35,7 +33,6 @@ async def generate_random_data(request: Request) -> Iterator[str]:
     client_ip = request.client.host
     logger.info("Client %s connected", client_ip)
 
-    last_value = ''
     fixed_time = time()
 
     async with websockets.connect("ws://192.168.1.10", ping_interval=None) as websocket:
@@ -43,10 +40,6 @@ async def generate_random_data(request: Request) -> Iterator[str]:
         while True:
             date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             value = await websocket.recv()
-
-            if not value:
-                value = last_value
-            else: last_value = value
 
             shock_sensor = value[0]
             voice_sensor = value[1:]
@@ -74,6 +67,7 @@ async def chart_data(request: Request) -> StreamingResponse:
     response.headers["Cache-Control"] = "no-cache"
     response.headers["X-Accel-Buffering"] = "no"
     return response
+
 
 if __name__=="__main__":
     uvicorn.run("webclient:application", port=80)
